@@ -51,21 +51,11 @@ const processMenu = (data) => {
       break;
     }
     case '4': {
-      console.log(
-        inputList
-          .filter((value) => !isNaN(Number(value)))
-          .map(Number)
-          .sort((a, b) => a - b),
-      );
+      console.log(inputList.filter((value) => !isNaN(Number(value))).map(Number).sort((a, b) => a - b));
       break;
     }
     case '5': {
-      console.log(
-        inputList
-          .filter((value) => !isNaN(Number(value)))
-          .map(Number)
-          .sort((a, b) => b - a),
-      );
+      console.log(inputList.filter((value) => !isNaN(Number(value))).map(Number).sort((a, b) => b - a));
       break;
     }
     case '6': {
