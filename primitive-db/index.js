@@ -52,25 +52,29 @@ const viewUsers = async () => {
   readFile('./users.json', 'utf8', async (error, data) => {
     if (!data || error) console.log(error);
 
-    const users = JSON.parse(data);
+    const savedUsers = JSON.parse(data);
 
-    console.log(users);
-
-    let user = null;
+    let searchedUsers = [];
 
     await input({
       message: messages.search,
       validate: (value) => {
-        user = users.find((user) => user.name === value);
+        searchedUsers = savedUsers.filter((user) => user.name.toLowerCase() === value.toLowerCase());
 
-        if (!user) return "User doesn't exist";
+        if (!searchedUsers.length) return "User doesn't exist";
 
         return true;
       },
     });
 
-    console.log(`User ${user.name} was found`);
-    console.log(user);
+    if (searchedUsers.length === 1) {
+      console.log(`User ${searchedUsers[0].name} was found`);
+      console.log(searchedUsers[0]);
+    } else {
+      console.log(`Several user with name ${searchedUsers[0].name} were found`);
+      console.log(searchedUsers);
+    }
+
     return;
   });
 };
