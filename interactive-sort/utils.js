@@ -1,5 +1,5 @@
 export const messages = {
-  welcome: 'Please enter ten words or digits divided by space: ',
+  welcome: '\nPlease enter ten words or digits divided by space: ',
   menu: `
 How would you like to sort values?
 1. Words by name (A - Z)
