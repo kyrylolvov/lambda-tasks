@@ -61,17 +61,17 @@ const viewUsers = async () => {
       validate: (value) => {
         searchedUsers = savedUsers.filter((user) => user.name.toLowerCase() === value.toLowerCase());
 
-        if (!searchedUsers.length) return "User doesn't exist";
+        if (!searchedUsers.length) return 'No users with specified name were found.';
 
         return true;
       },
     });
 
     if (searchedUsers.length === 1) {
-      console.log(`User ${searchedUsers[0].name} was found`);
+      console.log(`User ${searchedUsers[0].name} was found:`);
       console.log(searchedUsers[0]);
     } else {
-      console.log(`Several user with name ${searchedUsers[0].name} were found`);
+      console.log(`Several user with name ${searchedUsers[0].name} were found:`);
       console.log(searchedUsers);
     }
 
