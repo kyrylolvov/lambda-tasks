@@ -3,21 +3,21 @@ import axios from 'axios';
 import TelegramBot from 'node-telegram-bot-api';
 
 // Settings .env variables so that telegram-bot-api stops showing warnings
-process.env.NTBA_FIX_319 = 1;
-process.env.NTBA_FIX_350 = 0;
+process.env.NTBA_FIX_319 = '1';
+process.env.NTBA_FIX_350 = '0';
 
 dotenv.config();
 
 const { TELEGRAM_BOT_TOKEN } = process.env;
 
-const bot = new TelegramBot(TELEGRAM_BOT_TOKEN, { polling: true });
+const bot = new TelegramBot(TELEGRAM_BOT_TOKEN!, { polling: true });
 
 console.log('Telegram bot successfully started!\n');
 
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
 
-  console.log(`User ${msg.from.first_name} messaged ${msg.text}`);
+  console.log(`User ${msg.from?.first_name} messaged ${msg.text}`);
 
   if (msg.text === 'photo') {
     try {

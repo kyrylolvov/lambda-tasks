@@ -1,6 +1,6 @@
 import { messages } from './utils.js';
 
-let inputList = [];
+let inputList: string[] = [];
 
 const promptInput = () => {
   process.stdout.write(messages.welcome);
@@ -10,7 +10,7 @@ const promptMenu = () => {
   process.stdout.write(messages.menu);
 };
 
-const processInput = (data) => {
+const processInput = (data: Buffer) => {
   const input = data.toString().trim();
 
   if (input === 'exit') process.exit();
@@ -42,7 +42,7 @@ const processMenu = (data) => {
       break;
     }
     case '2': {
-      console.log(inputList.filter((value) => isNaN(Number(value))).sort((a, b) => a.length - b.length));
+      console.log(inputList.filter((value) => isNaN(Number(value))).sort((a: string, b: string) => a.length - b.length));
       break;
     }
     case '3': {
@@ -63,7 +63,7 @@ const processMenu = (data) => {
     }
 
     default: {
-      processMenu();
+      processMenu(data);
       startAgain = false;
       break;
     }

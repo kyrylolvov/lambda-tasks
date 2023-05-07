@@ -1,6 +1,6 @@
 import { writeFile, readFile } from 'fs';
 import { input, select, confirm } from '@inquirer/prompts';
-import { messages, genderOptions, ageValidation } from './utils.js';
+import { messages, genderOptions, ageValidation, IUser } from './utils.js';
 
 const addUser = async () => {
   let continueAdding = true;
@@ -52,9 +52,9 @@ const viewUsers = async () => {
   readFile('./users.json', 'utf8', async (error, data) => {
     if (!data || error) console.log(error);
 
-    const savedUsers = JSON.parse(data);
+    const savedUsers: IUser[] = JSON.parse(data);
 
-    let searchedUsers = [];
+    let searchedUsers: IUser[] = [];
 
     await input({
       message: messages.search,

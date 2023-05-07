@@ -1,3 +1,9 @@
+export interface IUser {
+  name: string;
+  gender: string;
+  age: number;
+}
+
 export const messages = {
   name: "Enter user's name (to cancel press Enter):",
   gender: "Choose user's gender:",
@@ -20,7 +26,7 @@ export const genderOptions = [
   },
 ];
 
-export const ageValidation = (value) => {
+export const ageValidation = (value: string) => {
   const age = Number(value);
 
   if (isNaN(age) || age <= 0) {
