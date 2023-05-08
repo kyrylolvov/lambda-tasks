@@ -1,6 +1,8 @@
-import { writeFile, readFile } from 'fs';
-import { input, select, confirm } from '@inquirer/prompts';
+import { readFile, existsSync } from 'fs';
+import { input, confirm, select } from '@inquirer/prompts';
+
 import { messages, genderOptions, ageValidation, IUser } from './utils.js';
+import { appendFile } from 'fs';
 
 const addUser = async () => {
   let continueAdding = true;
@@ -22,22 +24,13 @@ const addUser = async () => {
 
     const age = await input({
       message: messages.age,
-      validate: (value) => ageValidation(value),
+      validate: (value: string) => ageValidation(value),
     });
 
     const user = { name, gender, age: +age };
 
-    readFile('./users.json', 'utf8', (error, data) => {
-      let users;
-
-      if (!data || error) users = [];
-      else users = JSON.parse(data);
-
-      users.push(user);
-
-      writeFile('./users.json', JSON.stringify(users), (error) => {
-        if (error) console.log(error);
-      });
+    appendFile('./src/users.txt', JSON.stringify(user) + '\n', (error) => {
+      if (error) console.log(error);
     });
   }
 
@@ -49,16 +42,24 @@ const viewUsers = async () => {
 
   if (!answer) process.exit();
 
-  readFile('./users.json', 'utf8', async (error, data) => {
+  if (!existsSync('./src/users.txt')) {
+    console.log("The users.json file doesn't exist.");
+    return;
+  }
+
+  readFile('./src/users.txt', 'utf8', async (error, data) => {
     if (!data || error) console.log(error);
 
-    const savedUsers: IUser[] = JSON.parse(data);
+    const savedUsers = data
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line));
 
     let searchedUsers: IUser[] = [];
 
     await input({
       message: messages.search,
-      validate: (value) => {
+      validate: (value: string) => {
         searchedUsers = savedUsers.filter((user) => user.name.toLowerCase() === value.toLowerCase());
 
         if (!searchedUsers.length) return 'No users with specified name were found.';
@@ -79,5 +80,9 @@ const viewUsers = async () => {
   });
 };
 
-await addUser();
-viewUsers();
+const main = async () => {
+  await addUser();
+  viewUsers();
+};
+
+main();

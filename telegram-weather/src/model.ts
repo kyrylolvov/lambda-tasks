@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { IForecast } from './types';
+import { IForecast } from './types.js';
 
 dotenv.config();
 

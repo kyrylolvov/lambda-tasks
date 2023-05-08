@@ -1,6 +1,7 @@
 import TelegramBot, { Message } from 'node-telegram-bot-api';
-import { getWeatherData } from './model';
-import { IForecast, IGroupedForecasts } from './types';
+
+import { getWeatherData } from './model.js';
+import { IForecast, IGroupedForecasts } from './types.js';
 
 const formatDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'short', day: 'numeric' };

@@ -5,14 +5,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
+    "dev": "nodemon",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
   "dependencies": {
-    "@inquirer/prompts": "^1.0.1"
+    "@inquirer/prompts": "^1.0.3",
+    "@types/node": "^20.1.0"
   }
 }

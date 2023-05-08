@@ -1,15 +1,16 @@
 import dotenv from 'dotenv';
 import TelegramBot from 'node-telegram-bot-api';
 
-import { startMenuOptions, weatherMenuOptions } from './view';
-import { getWeatherData } from './model';
-import { sendWeather } from './controller';
+import { startMenuOptions, weatherMenuOptions } from './view.js';
+import { sendWeather } from './controller.js';
 
 dotenv.config();
 
 const { TELEGRAM_BOT_TOKEN } = process.env;
 
 const bot = new TelegramBot(TELEGRAM_BOT_TOKEN!, { polling: true });
+
+console.log('Telegram bot successfully started!\n');
 
 bot.onText(/\/start|Back to Main Menu/, (msg) => {
   bot.sendMessage(msg.chat.id, 'Start menu', startMenuOptions);

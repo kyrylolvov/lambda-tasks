@@ -1,0 +1,3 @@
+{"name":"Kyrylo","gender":"male","age":20}
+{"name":"Bruce","gender":"male","age":21}
+{"name":"KYRYLO","gender":"male","age":21}
