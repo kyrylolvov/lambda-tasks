@@ -1,7 +1,7 @@
 import TelegramBot, { Message } from 'node-telegram-bot-api';
 
-import { getWeatherData } from './model.js';
-import { IForecast, IGroupedForecasts } from './types.js';
+import { getWeatherData } from '../models/weather.js';
+import { IForecast, IGroupedForecasts } from '../types/weather.js';
 
 const formatDate = (date: Date) => {
   const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'short', day: 'numeric' };
@@ -45,7 +45,7 @@ const displayForecasts = (groupedForecasts: IGroupedForecasts[]) => {
       const tempSign = forecast.temp >= 0 ? '+' : '-';
       const feelsLikeSign = forecast.feels_like >= 0 ? '+' : '-';
 
-      result += `\t\t${time} ${tempSign}${forecast.temp.toFixed(0)}°C, feels like ${feelsLikeSign}${forecast.feels_like.toFixed(0)}°C, ${forecast.weatherDescription}\n`;
+      result += `${time} ${tempSign}${forecast.temp.toFixed(0)}°C, feels like ${feelsLikeSign}${forecast.feels_like.toFixed(0)}°C, ${forecast.weatherDescription}\n`;
     });
 
     result += '\n';
