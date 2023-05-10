@@ -12,22 +12,30 @@ export const uniqueValues = async (filesContent: string[]): Promise<void> => {
 };
 
 export const existInNumberOfFiles = async (filesContent: string[], numberOfFiles: number): Promise<void> => {
-  const valueCounts = new Map<string, number>();
+  // const valueCounts = new Map<string, number>();
+  const valueCounts: { [key: string]: number } = {};
 
   filesContent.forEach((values) => {
     const uniqueValues = new Set<string>(values.split('\n'));
     uniqueValues.forEach((value) => {
-      valueCounts.set(value, (valueCounts.get(value) || 0) + 1);
+      // valueCounts.set(value, (valueCounts.get(value) || 0) + 1);
+      valueCounts[value] = (valueCounts[value] || 0) + 1;
     });
   });
 
   let numberOfValuesInFiles = 0;
 
-  valueCounts.forEach((count) => {
-    if (count >= numberOfFiles) {
+  for (const value in valueCounts) {
+    if (valueCounts[value] >= numberOfFiles) {
       numberOfValuesInFiles++;
     }
-  });
+  }
+
+  // valueCounts.forEach((count) => {
+  //   if (count >= numberOfFiles) {
+  //     numberOfValuesInFiles++;
+  //   }
+  // });
 
   console.log(`Number of values present in ${numberOfFiles === 10 ? 'at least' : ''} ${numberOfFiles} files: ${numberOfValuesInFiles}`);
 };
