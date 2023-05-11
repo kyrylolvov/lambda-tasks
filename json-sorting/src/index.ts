@@ -22,7 +22,7 @@ const findIsValid = (object: IObject) => {
 };
 
 const main = async () => {
-  for (const endpointId of endpointIds) {
+  const promises = endpointIds.map(async (endpointId) => {
     const json = await getData(endpointId);
 
     if (json) {
@@ -32,7 +32,9 @@ const main = async () => {
 
       console.log(`${JSONBASE_API_URL}/${endpointId}: isDone - ${isDone}`);
     }
-  }
+  });
+
+  await Promise.all(promises);
 
   console.log(`\nTrue values: ${positiveValues}`);
   console.log(`False values: ${negativeValues}`);
