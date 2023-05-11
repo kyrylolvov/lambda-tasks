@@ -8,7 +8,6 @@ const { JSONBASE_API_URL } = process.env;
 declare module 'axios' {
   export interface AxiosRequestConfig {
     retry?: number;
-    retryDelay?: number;
   }
 }
 
@@ -18,13 +17,9 @@ export interface IObject {
 }
 
 axios.interceptors.response.use(undefined, async (err: AxiosError) => {
-  const { config, message } = err;
+  const { config } = err;
 
   if (!config || !config.retry) {
-    return Promise.reject(err);
-  }
-
-  if (!(message.includes('timeout') || message.includes('Network Error')) || message.includes('Request failed with status code 404')) {
     return Promise.reject(err);
   }
 
@@ -33,7 +28,7 @@ axios.interceptors.response.use(undefined, async (err: AxiosError) => {
   const delayRetryRequest = new Promise<void>((resolve) => {
     setTimeout(() => {
       resolve();
-    }, config.retryDelay);
+    }, 1000);
   });
 
   await delayRetryRequest;
@@ -42,7 +37,7 @@ axios.interceptors.response.use(undefined, async (err: AxiosError) => {
 
 export const getData = async (id: number) => {
   try {
-    const { data } = await axios.get<IObject>(`${JSONBASE_API_URL}/${id}`, { retry: 3, retryDelay: 3000 });
+    const { data } = await axios.get<IObject>(`${JSONBASE_API_URL}/${id}`, { retry: 3 });
     return data;
   } catch (error: any) {
     console.log(`${JSONBASE_API_URL}/${id}: ${error.message}`);
