@@ -22,8 +22,8 @@ export const getMe = async (req: Request, res: Response) => {
     const response: Response = await getMeService(res, accessToken, requestNumber);
 
     return response.status(200);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    return res.status(400).json({ message: 'Something went wrong' });
+    return res.status(error.message === 'jwt expired' ? 401 : 400).json({ message: error.message === 'jwt expired' ? 'Token has expired' : 'Something went wrong' });
   }
 };

@@ -12,7 +12,7 @@ export const signUp = async (req: Request, res: Response) => {
     const response: Response = await signUpService(res, body);
 
     return response.status(200).json({ message: 'User successfully created!' });
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return res.status(400).json({ message: 'Something went wrong' });
   }
@@ -26,7 +26,7 @@ export const login = async (req: Request, res: Response) => {
     const response: Response = await loginService(res, body);
 
     return response.status(200);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return res.status(400).json({ message: 'Something went wrong' });
   }
@@ -44,7 +44,7 @@ export const refresh = async (req: Request, res: Response) => {
     const response: Response = await refreshAccessTokenService(res, refreshToken);
 
     return response.status(200);
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     return res.status(400).json({ message: 'Something went wrong' });
   }
