@@ -1,37 +1,42 @@
-import { Db as MongoDb, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
+import dotenv from 'dotenv';
 
-export interface User {
-  id: string;
-  email: string;
-  password: string;
-}
+import { User } from '../types/user.js';
+import { Authentication } from '../types/auth.js';
 
-export interface SignUp {
-  email: string;
-  password: string;
-}
+dotenv.config();
 
-const usersCollection = 'Users';
+const { MONGODB_URL, MONGO_DB_NAME, MONGO_DB_USER_COLLECTION } = process.env;
 
-export default class Users {
-  public constructor(private db: MongoDb) {}
+const mongoClient = new MongoClient(MONGODB_URL!);
 
-  public create = async (values: SignUp) => {
-    const userId = (await this.db.collection(usersCollection).insertOne(values)).insertedId;
-    const user = this.getById(userId);
+export const create = async (values: Authentication) => {
+  const userId = (await mongoClient?.db(MONGO_DB_NAME).collection(MONGO_DB_USER_COLLECTION!).insertOne(values)).insertedId;
+  const user = await getById(userId);
 
-    return user;
+  return user;
+};
+
+export const getById = async (userId: ObjectId) => {
+  const user = await mongoClient?.db(MONGO_DB_NAME).collection(MONGO_DB_USER_COLLECTION!).findOne({ _id: userId });
+
+  if (!user) return null;
+
+  return {
+    id: user?._id.toString(),
+    email: user?.email,
+    password: user?.password,
   };
+};
 
-  public getById = async (userId: ObjectId) => {
-    const user = await this.db.collection(usersCollection).findOne({ _id: userId });
+export const getByEmail = async (userEmail: string): Promise<User | null> => {
+  const user = await mongoClient?.db(MONGO_DB_NAME).collection(MONGO_DB_USER_COLLECTION!).findOne({ email: userEmail });
 
-    return user;
+  if (!user) return null;
+
+  return {
+    id: user?._id.toString(),
+    email: user?.email,
+    password: user?.password,
   };
-
-  public getByEmail = async (userEmail: string) => {
-    const user = await this.db.collection(usersCollection).findOne({ email: userEmail });
-
-    return user;
-  };
-}
+};

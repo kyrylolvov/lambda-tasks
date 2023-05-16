@@ -5,3 +5,8 @@ export interface TokenData {
   email: string;
   type: TokenType;
 }
+
+export interface ApiAuthTokens {
+  accessToken: string;
+  refreshToken: string;
+}

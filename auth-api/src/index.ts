@@ -1,6 +1,8 @@
+import { MongoClient } from 'mongodb';
 import express from 'express';
 import dotenv from 'dotenv';
-import { MongoClient } from 'mongodb';
+
+import router from './router/index.js';
 
 dotenv.config();
 
@@ -10,10 +12,12 @@ const app = express();
 
 app.use(express.json());
 
-const mongoClient = new MongoClient(MONGODB_URL!);
-await mongoClient.connect();
-console.log('Connected to database successfully');
-
 app.listen(SERVER_PORT, () => {
   console.log(`Server is running on port ${SERVER_PORT}`);
 });
+
+const mongoClient = new MongoClient(MONGODB_URL!);
+await mongoClient.connect();
+console.log(`Database connection established`);
+
+app.use('/', router());
