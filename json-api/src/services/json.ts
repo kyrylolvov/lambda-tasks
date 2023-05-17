@@ -20,7 +20,5 @@ export const getService = async (res: Response, route: string): Promise<Response
     throw new Error('There is no json with the specified route');
   }
 
-  const json = Array.isArray(existingRoute?.json) ? existingRoute?.json : { ...existingRoute?.json };
-
-  return res.json(json);
+  return res.json(existingRoute?.json);
 };
