@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import mysql from 'mysql2/promise';
 
 import { ApiCoinMarketCap } from './services/api/ApiCoinMarketCap.js';
 import { ApiCoinBase } from './services/api/ApiCoinBase.js';
@@ -21,4 +22,8 @@ const apiCoinBase = new ApiCoinBase();
 const apiCoinStats = new ApiCoinStats();
 const apiKucoin = new ApiKucoin();
 
-await apiKucoin.getData();
+// const connection = await mysql.createConnection({
+//   host: 'host',
+//   user: 'user',
+//   database: 'database',
+// });

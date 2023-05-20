@@ -6,7 +6,6 @@ dotenv.config();
 const { KUCOIN_API_URL } = process.env;
 
 interface KucoinCrypto {
-  code: string;
   data: {
     [key: string]: string;
   };
