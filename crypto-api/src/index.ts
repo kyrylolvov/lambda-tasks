@@ -1,35 +1,27 @@
-import express from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql2/promise';
 import { drizzle } from 'drizzle-orm/mysql2';
 
-import { ApiCoinMarketCap } from './services/api/ApiCoinMarketCap.js';
-import { ApiCoinBase } from './services/api/ApiCoinBase.js';
-import { ApiCoinStats } from './services/api/ApiCoinStats.js';
-import { ApiKucoin } from './services/api/ApiKucoin.js';
+import App from './app.js';
 
 dotenv.config();
 
 const { SERVER_PORT, MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE } = process.env;
 
-const connection = await mysql.createConnection({
-  host: MYSQL_HOST,
-  user: MYSQL_USER,
-  password: MYSQL_PASSWORD,
-  database: MYSQL_DATABASE,
-});
+const main = async () => {
+  try {
+    const client = await mysql.createConnection({ host: MYSQL_HOST, user: MYSQL_USER, password: MYSQL_PASSWORD, database: MYSQL_DATABASE });
 
-const db = drizzle(connection);
+    const db = drizzle(client);
 
-console.log('Connection to database established!');
+    const port = Number(SERVER_PORT);
 
-const app = express();
+    const expressApp = new App(port);
+    expressApp.use();
+    expressApp.listen();
+  } catch (e: any) {
+    console.log(e);
+  }
+};
 
-app.use(express.json());
-
-app.listen(SERVER_PORT, () => console.log(`Server is running on port ${SERVER_PORT}`));
-
-const apiCoinMarketCap = new ApiCoinMarketCap();
-const apiCoinBase = new ApiCoinBase();
-const apiCoinStats = new ApiCoinStats();
-const apiKucoin = new ApiKucoin();
+main();
