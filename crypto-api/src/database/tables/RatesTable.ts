@@ -1,8 +1,8 @@
 import { InferModel } from 'drizzle-orm';
-import { float, int, mysqlTable, timestamp, varchar } from 'drizzle-orm/mysql-core';
+import { float, int, mysqlTable, timestamp } from 'drizzle-orm/mysql-core';
 
 import { marketsTable } from './MarketsTable.js';
-import { cryptoCurrenciesTable } from './CryptoCurrenyTable.js';
+import { cryptoCurrenciesTable } from './CryptoCurreniesTable.js';
 
 export const ratesTable = mysqlTable('rates', {
   id: int('id').autoincrement().primaryKey(),
