@@ -16,7 +16,7 @@ const main = async () => {
 
     const port = Number(SERVER_PORT);
 
-    const expressApp = new App(port);
+    const expressApp = new App(port, []);
     expressApp.use();
     expressApp.listen();
   } catch (e: any) {
