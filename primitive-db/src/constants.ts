@@ -1,14 +1,9 @@
-export interface IUser {
-  name: string;
-  gender: string;
-  age: number;
-}
-
 export const messages = {
   name: "Enter user's name (to cancel press Enter):",
   gender: "Choose user's gender:",
   age: "Enter user's age:",
   search: "Enter user's name you want to find in database:",
+  searchConfirm: 'Would you like to search values in the database?',
 };
 
 export const genderOptions = [
@@ -25,13 +20,3 @@ export const genderOptions = [
     value: 'undecided',
   },
 ];
-
-export const ageValidation = (value: string) => {
-  const age = Number(value);
-
-  if (isNaN(age) || age <= 0) {
-    return 'Please enter a valid age.';
-  }
-
-  return true;
-};
