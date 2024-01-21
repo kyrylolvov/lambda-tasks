@@ -11,11 +11,11 @@ export default class App {
   }
 
   public async run(): Promise<void> {
-    await this.addUser();
+    await this.addNewUsers();
     await this.viewUsers();
   }
 
-  private async addUser(): Promise<void> {
+  private async addNewUsers(): Promise<void> {
     let user = await User.createUser();
 
     while (user) {
